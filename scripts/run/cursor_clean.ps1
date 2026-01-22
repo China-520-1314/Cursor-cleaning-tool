@@ -18,7 +18,6 @@ function Write-Banner {
     Write-Host ""
     Write-Host "${green}Cursor 清理工具（自定义分发）${nc}"
     Write-Host "${blue}仓库：${nc}https://gitee.com/loong5201314/cursor-cleaning-tool"
-    Write-Host "${yellow}提示：${nc}建议先下载脚本到本地再执行，避免直接远程管道执行。"
     Write-Host ""
 }
 
