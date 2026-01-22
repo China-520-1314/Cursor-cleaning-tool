@@ -14,7 +14,6 @@ $NC = "$ESC[0m"
 Write-Host ""
 Write-Host "$GREEN================ Cursor 清理工具 ================$NC"
 Write-Host "$BLUE仓库：$NC https://gitee.com/loong5201314/cursor-cleaning-tool"
-Write-Host "$YELLOW说明：$NC 本脚本为自用分发版本；请确保来源可信，建议先下载到本地再执行。"
 Write-Host "$GREEN================================================$NC"
 Write-Host ""
 
@@ -1483,7 +1482,7 @@ function Test-CursorEnvironment {
     }
 }
 
-# �🛠️ 修改机器码配置（增强版）
+#  🛠️ 修改机器码配置（增强版）
 function Modify-MachineCodeConfig {
     param(
         [string]$Mode = "FULL"
@@ -1986,9 +1985,8 @@ Write-Host @"
 "@
 Write-Host "$BLUE================================$NC"
 Write-Host "$GREEN🚀   Cursor 防掉试用Pro删除工具          $NC"
-Write-Host "$YELLOW📱  关注公众号【煎饼果子卷AI】 $NC"
-Write-Host "$YELLOW🤝  一起交流更多Cursor技巧和AI知识(脚本免费、关注公众号加群有更多技巧和大佬)  $NC"
-Write-Host "$YELLOW💡  [重要提示] 本工具免费，如果对您有帮助，请关注公众号【煎饼果子卷AI】  $NC"
+Write-Host "$YELLOW🤝  一起交流更多Cursor技巧和AI知识(脚本免费、加群有更多技巧和大佬)  $NC"
+Write-Host "$YELLOW💡  [重要提示] 本工具免费，如果对您有帮助，请添加VX：Loong520666加群  $NC"
 Write-Host ""
 Write-Host "$YELLOW⚡  [小小广告] Cursor官网正规成品号：Pro¥65 | Pro+¥265 | Ultra¥888 独享账号| ￥488 Team绝版次数号1000次+20刀额度 | 全部7天质保 | ，WeChat：JavaRookie666  $NC"
 Write-Host "$BLUE================================$NC"
@@ -2214,7 +2212,7 @@ function Close-CursorProcessAndSaveInfo {
     }
 }
 
-# �️ 确保备份目录存在
+#  ️ 确保备份目录存在
 if (-not $BACKUP_DIR) {
     Write-Host "$YELLOW⚠️  [警告]$NC 无法解析备份目录路径，跳过创建"
 } elseif (-not (Test-Path $BACKUP_DIR)) {
@@ -2226,7 +2224,7 @@ if (-not $BACKUP_DIR) {
     }
 }
 
-# �🚀 根据用户选择执行相应功能
+#  🚀 根据用户选择执行相应功能
 if ($executeMode -eq "MODIFY_ONLY") {
     Write-Host "$GREEN🚀 [开始]$NC 开始执行仅修改机器码功能..."
 
@@ -2495,17 +2493,16 @@ if ($executeMode -eq "MODIFY_ONLY") {
 }
 
 
-# 📱 显示公众号信息
+# 📱 显示信息
 Write-Host ""
 Write-Host "$GREEN================================$NC"
-Write-Host "$YELLOW📱  关注公众号【煎饼果子卷AI】一起交流更多Cursor技巧和AI知识(脚本免费、关注公众号加群有更多技巧和大佬)  $NC"
-Write-Host "$YELLOW⚡   [小小广告] Cursor官网正规成品号：Pro¥65 | Pro+¥265 | Ultra¥888 独享账号| ￥488 Team绝版次数号1000次+20刀额度 | 全部7天质保 | ，WeChat：JavaRookie666  $NC"
+Write-Host "$YELLOW⚡   [小小广告] Cursor官网正规成品号：Pro¥50 | Pro+¥168 | Ultra¥666 独享账号全部7天质保 | ，微信：Loong520666  $NC"
 Write-Host "$GREEN================================$NC"
 Write-Host ""
 
 # 🎉 脚本执行完成
 Write-Host "$GREEN🎉 [脚本完成]$NC 感谢使用 Cursor 机器码修改工具！"
-Write-Host "$BLUE💡 [提示]$NC 如有问题请参考公众号或重新运行脚本"
+Write-Host "$BLUE💡 [提示]$NC 如有问题请以管理员方式重新运行脚本或添加VX反馈：Loong520666"
 Write-Host ""
 Read-Host "按回车键退出"
 exit 0
