@@ -35,3 +35,17 @@ https://gitee.com/<owner>/<repo>/raw/v1.0.0/scripts/run/cursor_win_id_modifier.p
 ```
 
 > 不建议直接 `irm ... | iex`，因为它等同于“远程代码直接执行”。如果你坚持提供，也建议至少固定到 tag/commit。
+
+## GitHub raw 链接模板（已同步镜像）
+
+分支 raw：
+
+```text
+https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/<branch>/scripts/run/cursor_win_id_modifier.ps1
+```
+
+建议做法：打 tag（例如 `v1.0.0`），然后用 tag raw：
+
+```text
+https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/v1.0.0/scripts/run/cursor_win_id_modifier.ps1
+```
