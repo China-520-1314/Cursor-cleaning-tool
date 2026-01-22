@@ -14,7 +14,6 @@ $NC = "$ESC[0m"
 Write-Host ""
 Write-Host "$GREEN================ Cursor 清理工具 ================$NC"
 Write-Host "$BLUE仓库：$NC https://gitee.com/loong5201314/cursor-cleaning-tool"
-Write-Host "$YELLOW说明：$NC 本脚本为自用分发版本；请确保来源可信，建议先下载到本地再执行。"
 Write-Host "$GREEN================================================$NC"
 Write-Host ""
 
