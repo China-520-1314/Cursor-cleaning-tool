@@ -13,6 +13,19 @@ irm "https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/
 （Gitee Raw + wget.la 代理：用 IWR 取 .Content）
 iex ((Invoke-WebRequest -UseBasicParsing "https://wget.la/https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_win_id_modifier.ps1").Content)
 
+macOS（PowerShell Core / pwsh）：
+（Gitee Raw 直连）
+pwsh -NoProfile -Command "irm \"https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_mac_id_modifier.ps1\" | iex"
+
+（GitHub Raw 直连）
+pwsh -NoProfile -Command "irm \"https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_mac_id_modifier.ps1\" | iex"
+
+（下载再执行 - Gitee）
+pwsh -NoProfile -Command "$url=\"https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_mac_id_modifier.ps1\"; $out=Join-Path $PWD \"cursor_mac_clean.ps1\"; irm $url -OutFile $out; pwsh -File $out"
+
+（下载再执行 - GitHub）
+pwsh -NoProfile -Command "$url=\"https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_mac_id_modifier.ps1\"; $out=Join-Path $PWD \"cursor_mac_clean.ps1\"; irm $url -OutFile $out; pwsh -File $out"
+
 提示：
 1) 远程管道执行存在风险，只建议在确认脚本来源可信的情况下使用。
 2) 若 PowerShell 出现 “>>” 提示，通常是引号未闭合或粘贴被截断；按 Ctrl+C 退出后重新复制整行再粘贴。
