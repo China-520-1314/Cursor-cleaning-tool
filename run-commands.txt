@@ -4,28 +4,63 @@ Cursor 清理脚本运行命令（复制整行粘贴，不要在中间按回车�
 （GitHub Raw 直连）
 irm "https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_win_id_modifier.ps1" | iex
 
-（GitHub Raw + wget.la 代理：用 IWR 取 .Content，避免 irm 解析成对象导致 iex 报“无效输入”）
-iex ((Invoke-WebRequest -UseBasicParsing "https://wget.la/https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_win_id_modifier.ps1").Content)
+（GitHub Raw + wget.la 代理）
+irm "https://wget.la/https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_win_id_modifier.ps1" | iex
 
 （Gitee Raw 直连）
 irm "https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_win_id_modifier.ps1" | iex
 
-（Gitee Raw + wget.la 代理：用 IWR 取 .Content）
-iex ((Invoke-WebRequest -UseBasicParsing "https://wget.la/https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_win_id_modifier.ps1").Content)
+（Gitee Raw + wget.la 代理）
+irm "https://wget.la/https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_win_id_modifier.ps1" | iex
 
-macOS（PowerShell Core / pwsh）：
+macOS 说明：
+1) 以上命令是 PowerShell 脚本，且当前脚本名为 cursor_win_id_modifier.ps1（Windows 专用），macOS 终端无法直接运行。
+2) 在 macOS 的 zsh/bash 里直接粘贴 PowerShell 语法会报错（把 URL 当命令了）。必须用 pwsh 执行。
+3) 如果你有 **macOS 专用脚本** 且已安装 PowerShell Core（pwsh），可用：
+   pwsh -NoProfile -Command "irm \"https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_mac_id_modifier.ps1\" | iex"
+   或先下载再执行：
+   pwsh -NoProfile -Command "$url=\"https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_mac_id_modifier.ps1\"; $out=Join-Path $PWD \"cursor_mac_clean.ps1\"; irm $url -OutFile $out; pwsh -File $out"
+4) 没有 macOS 版本脚本时，请在 Windows 环境运行（或使用虚拟机/远程 Windows）。
+
+macOS（仅当存在 macOS 专用脚本时使用）完整命令：
+一行直连执行：
 （Gitee Raw 直连）
 pwsh -NoProfile -Command "irm \"https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_mac_id_modifier.ps1\" | iex"
 
 （GitHub Raw 直连）
 pwsh -NoProfile -Command "irm \"https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_mac_id_modifier.ps1\" | iex"
 
-（下载再执行 - Gitee）
+一行版（下载再执行）：
+（Gitee Raw）
 pwsh -NoProfile -Command "$url=\"https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_mac_id_modifier.ps1\"; $out=Join-Path $PWD \"cursor_mac_clean.ps1\"; irm $url -OutFile $out; pwsh -File $out"
 
-（下载再执行 - GitHub）
+（GitHub Raw）
 pwsh -NoProfile -Command "$url=\"https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_mac_id_modifier.ps1\"; $out=Join-Path $PWD \"cursor_mac_clean.ps1\"; irm $url -OutFile $out; pwsh -File $out"
 
+管理员权限说明：
+- Windows：通常需要“以管理员身份运行 PowerShell”，否则无法修改系统级配置/注册表/服务。
+- macOS：本脚本只修改当前用户目录下的 Cursor 配置/缓存文件，通常不需要 sudo。
+
+一行版（GitHub）：
+$url="https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_win_id_modifier.ps1"; $out=Join-Path $PWD "cursor_win_id_modifier.ps1"; irm $url -OutFile $out; powershell -ExecutionPolicy Bypass -File $out
+
+一行版（Gitee）：
+$url="https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_win_id_modifier.ps1"; $out=Join-Path $PWD "cursor_win_id_modifier.ps1"; irm $url -OutFile $out; powershell -ExecutionPolicy Bypass -File $out
+
+如果你更想“分步执行”（更容易排查问题），用下面三行：
+
+GitHub：
+$url = "https://raw.githubusercontent.com/China-520-1314/Cursor-cleaning-tool/master/scripts/run/cursor_win_id_modifier.ps1"
+$out = Join-Path $PWD "cursor_win_id_modifier.ps1"
+irm $url -OutFile $out
+powershell -ExecutionPolicy Bypass -File $out
+
+Gitee：
+$url = "https://gitee.com/loong5201314/cursor-cleaning-tool/raw/master/scripts/run/cursor_win_id_modifier.ps1"
+$out = Join-Path $PWD "cursor_win_id_modifier.ps1"
+irm $url -OutFile $out
+powershell -ExecutionPolicy Bypass -File $out
+
 提示：
-1) 远程管道执行存在风险，只建议在确认脚本来源可信的情况下使用。
-2) 若 PowerShell 出现 “>>” 提示，通常是引号未闭合或粘贴被截断；按 Ctrl+C 退出后重新复制整行再粘贴。
+1) 如果粘贴后 PowerShell 变成 “>>”，说明命令被截断/引号没闭合；按 Ctrl+C 退出后重新复制整行再粘贴。
+2) 你之前的 404/路径非法字符问题，基本都是因为把 URL 或 -File 路径拆行了，或中间混入了空格/回车。
