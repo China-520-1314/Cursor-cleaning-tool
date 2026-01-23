@@ -39,12 +39,50 @@ function Stop-CursorProcesses {
     }
 }
 
+function Get-AppSupportFromStorageFile {
+    param([Parameter(Mandatory = $true)][string]$StorageFile)
+    $globalStorageDir = Split-Path -Parent $StorageFile
+    $userDir = Split-Path -Parent $globalStorageDir
+    return (Split-Path -Parent $userDir)
+}
+
+function Resolve-CursorStorageFile {
+    $home = [Environment]::GetFolderPath([System.Environment+SpecialFolder]::UserProfile)
+    $default = Join-Path $home "Library/Application Support/Cursor/User/globalStorage/storage.json"
+    if (Test-Path $default) {
+        return $default
+    }
+
+    $alt = Join-Path $home "Library/Application Support/cursor/User/globalStorage/storage.json"
+    if (Test-Path $alt) {
+        return $alt
+    }
+
+    $appSupportRoot = Join-Path $home "Library/Application Support"
+    if (-not (Test-Path $appSupportRoot)) {
+        return $null
+    }
+
+    $candidates = Get-ChildItem -Path $appSupportRoot -Recurse -Filter "storage.json" -File -ErrorAction SilentlyContinue |
+        Where-Object { $_.FullName -match "globalStorage" -and ($_.FullName -match "Cursor" -or $_.FullName -match "cursor" -or $_.FullName -match "todesktop") } |
+        Select-Object -First 1
+
+    if ($candidates) {
+        return $candidates.FullName
+    }
+
+    return $null
+}
+
 function Get-CursorPaths {
     $home = [Environment]::GetFolderPath([System.Environment+SpecialFolder]::UserProfile)
-    $appSupport = Join-Path $home "Library/Application Support/Cursor"
-    $storageDir = Join-Path $appSupport "User/globalStorage"
-    $storageFile = Join-Path $storageDir "storage.json"
-    $machineIdFile = Join-Path $appSupport "machineid"
+    $storageFile = Resolve-CursorStorageFile
+    $appSupport = $null
+    if ($storageFile) {
+        $appSupport = Get-AppSupportFromStorageFile -StorageFile $storageFile
+    }
+    $storageDir = if ($storageFile) { Split-Path -Parent $storageFile } else { $null }
+    $machineIdFile = if ($appSupport) { Join-Path $appSupport "machineid" } else { $null }
     $cacheDir = Join-Path $home "Library/Caches/Cursor"
     $cursorDotDir = Join-Path $home ".cursor"
 
@@ -76,7 +114,7 @@ function Update-StorageJson {
         [Parameter(Mandatory = $true)][string]$StorageFile
     )
 
-    if (-not (Test-Path $StorageFile)) {
+    if (-not $StorageFile -or -not (Test-Path $StorageFile)) {
         Write-Host "$RED❌ [配置]$NC 未找到 storage.json: $StorageFile"
         Write-Host "$YELLOW💡 [提示]$NC 请先启动一次 Cursor 生成配置文件"
         return $false
@@ -178,6 +216,12 @@ Write-Banner
 Stop-CursorProcesses
 
 $paths = Get-CursorPaths
+if ($paths.AppSupport) {
+    Write-Host "$BLUEℹ️  [路径]$NC Cursor 数据目录: $($paths.AppSupport)"
+}
+if ($paths.StorageFile) {
+    Write-Host "$BLUEℹ️  [路径]$NC storage.json: $($paths.StorageFile)"
+}
 
 if (Confirm-DeepClean) {
     Invoke-DeepClean -Paths $paths
